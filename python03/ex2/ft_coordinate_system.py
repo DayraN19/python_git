@@ -31,7 +31,6 @@ def parse_coordinates(coord_str: str) -> tuple[int, int, int] | None:
     except ValueError as e:
         print(f'Parsing invalid coordinates: "{coord_str}"')
         print(f"Error parsing coordinates: {e}")
-        # VERSION SANS type(), mais output IDENTIQUE
         print(
             "Error details - Type: ValueError, "
             f"Args: {e.args}"
