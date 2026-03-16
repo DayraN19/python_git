@@ -17,7 +17,7 @@ class Plant:
         print(self.get_info())
 
 
-def simulate_week(plants: list) -> None:
+def simulate_week(plants: list[Plant]) -> None:
     print("=== Day 1 ===")
     for day in range(1, 8):
         if day == 1:
@@ -40,7 +40,7 @@ def simulate_week(plants: list) -> None:
 def main() -> None:
     plant1 = Plant("Rose", 25, 30)
 
-    plants = [plant1]
+    plants: list[Plant] = [plant1]
 
     simulate_week(plants)
 

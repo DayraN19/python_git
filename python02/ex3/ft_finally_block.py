@@ -3,7 +3,7 @@ class Plant:
         self.name = name
 
 
-def water_plants(plant_list: str) -> None:
+def water_plants(plant_list: list[str | None]) -> None:
     print("Opening watering system")
     try:
         for plant in plant_list:

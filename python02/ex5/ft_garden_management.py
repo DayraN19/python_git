@@ -1,4 +1,3 @@
-# Custom exceptions
 class GardenError(Exception):
     pass
 
@@ -13,7 +12,7 @@ class WaterError(GardenError):
 
 class GardenManager:
     def __init__(self) -> None:
-        self.plants = []
+        self.plants: list[str] = []
 
     def add_plant(self, plant_name: str) -> None:
         if plant_name == "":
@@ -32,7 +31,7 @@ class GardenManager:
             print("Closing watering system (cleanup)")
 
     def check_plant_health(
-        self, plant_name: str, water_level: str, sun_h: str
+        self, plant_name: str, water_level: int, sun_h: int
     ) -> None:
         if water_level < 1 or water_level > 10:
             raise PlantError(f"Water level {water_level} is too high (max 10)")

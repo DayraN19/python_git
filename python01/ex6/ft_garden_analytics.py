@@ -19,14 +19,8 @@ class FloweringPlant(Plant):
 
 
 class PrizeFlower(FloweringPlant):
-    def __init__(
-        self,
-        name: str,
-        height: int,
-        age: int,
-        color: str,
-        prize_points: int
-    ) -> None:
+    def __init__(self, name: str, height: int, age: int,
+                 color: str, prize_points: int) -> None:
         super().__init__(name, height, age, color)
         self.prize_points = prize_points
 
@@ -51,19 +45,14 @@ class Garden:
     def report(self) -> None:
         print(f"\n=== {self.owner}'s Garden Report ===")
         print("Plants in garden:")
-
         for plant in self.plants:
             if isinstance(plant, PrizeFlower):
-                print(
-                    f"- {plant.name}: {plant.height}cm, "
-                    f"{plant.color} flowers (blooming), "
-                    f"Prize points: {plant.prize_points}"
-                )
+                print(f"- {plant.name}: {plant.height}cm,"
+                      f"{plant.color} flowers (blooming),"
+                      f"Prize points: {plant.prize_points}")
             elif isinstance(plant, FloweringPlant):
-                print(
-                    f"- {plant.name}: {plant.height}cm, "
-                    f"{plant.color} flowers (blooming)"
-                )
+                print(f"- {plant.name}: {plant.height}cm,"
+                      f"{plant.color} flowers (blooming)")
             else:
                 print(f"- {plant.name}: {plant.height}cm")
 
@@ -75,47 +64,59 @@ class GardenManager:
     def add_garden(self, garden: Garden) -> None:
         self.gardens.append(garden)
 
-    @classmethod
-    def create_garden_network(cls) -> None:
-        print("Garden network created")
 
-    @staticmethod
-    def validate_height(height: int) -> int:
-        return height >= 0
+def create_garden_network(cls) -> None:
+    print("Garden network created")
 
-    class GardenStats:
-        @staticmethod
-        def count_plants(plants: list) -> int:
-            return len(plants)
 
-        @staticmethod
-        def total_growth(plants: list) -> int:
-            return len(plants)
+GardenManager.create_garden_network = classmethod(create_garden_network)
 
-        @staticmethod
-        def plant_types(plants: list) -> tuple[int, int, int]:
-            regular = 0
-            flowering = 0
-            prize = 0
 
-            for plant in plants:
-                if isinstance(plant, PrizeFlower):
-                    prize += 1
-                elif isinstance(plant, FloweringPlant):
-                    flowering += 1
-                else:
-                    regular += 1
+def validate_height(height: int) -> bool:
+    return height >= 0
 
-            return regular, flowering, prize
 
-        @staticmethod
-        def garden_score(plants: list) -> int:
-            score = 0
-            for plant in plants:
-                score += plant.height
-                if isinstance(plant, PrizeFlower):
-                    score += plant.prize_points
-            return score
+GardenManager.validate_height = staticmethod(validate_height)
+
+
+class GardenManagerStats:
+    def count_plants(plants: list[Plant]) -> int:
+        return len(plants)
+
+    count_plants = staticmethod(count_plants)
+
+    def total_growth(plants: list[Plant]) -> int:
+        return len(plants)
+
+    total_growth = staticmethod(total_growth)
+
+    def plant_types(plants: list[Plant]) -> tuple[int, int, int]:
+        regular = 0
+        flowering = 0
+        prize = 0
+        for plant in plants:
+            if isinstance(plant, PrizeFlower):
+                prize += 1
+            elif isinstance(plant, FloweringPlant):
+                flowering += 1
+            else:
+                regular += 1
+        return regular, flowering, prize
+
+    plant_types = staticmethod(plant_types)
+
+    def garden_score(plants: list[Plant]) -> int:
+        score = 0
+        for plant in plants:
+            score += plant.height
+            if isinstance(plant, PrizeFlower):
+                score += plant.prize_points
+        return score
+
+    garden_score = staticmethod(garden_score)
+
+
+GardenManager.GardenStats = GardenManagerStats
 
 
 def main() -> None:
@@ -142,9 +143,7 @@ def main() -> None:
 
     print(f"Plants added: {plants_added}, Total growth: {total_growth}cm")
 
-    reg, flow, prz = GardenManager.GardenStats.plant_types(
-        alice_garden.plants
-    )
+    reg, flow, prz = GardenManager.GardenStats.plant_types(alice_garden.plants)
     print(f"Plant types: {reg} regular, {flow} flowering, {prz} prize flowers")
 
     print(f"Height validation test: {GardenManager.validate_height(10)}")

@@ -1,5 +1,5 @@
 def check_plant_health(
-    plant_name: str, water_level: str, sunlight_hours: str
+    plant_name: str, water_level: int, sunlight_hours: int
 ) -> None:
 
     if plant_name == "":
