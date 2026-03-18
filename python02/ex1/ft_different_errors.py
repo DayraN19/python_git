@@ -1,40 +1,51 @@
 def garden_operations(arg: str) -> None:
     try:
         if arg == "value":
-            open("file.txt", "invalid")      # ValueError
+            int("abc")
 
         elif arg == "zero":
-            10 / 0                           # ZeroDivisionError
+            10 / 0
 
         elif arg == "file":
-            open("missing.txt", "r")         # FileNotFoundError
+            open("missing.txt", "r")
 
         elif arg == "key":
             plants = {"rose": 10}
-            plants["missing_plant"]          # KeyError
+            plants["missing_plant"]
 
-        else:
-            print("No error triggered")
+    except ValueError as e:
+        print(f"Caught ValueError: {e}")
 
-    except ValueError:
-        print("ValueError detected")
-
-    except ZeroDivisionError:
-        print("ZeroDivisionError detected")
+    except ZeroDivisionError as e:
+        print(f"Caught ZeroDivisionError: {e}")
 
     except FileNotFoundError:
-        print("FileNotFoundError detected")
+        print("Caught FileNotFoundError: No such file 'missing.txt'")
 
-    except KeyError:
-        print("KeyError detected")
+    except KeyError as e:
+        print(f"Caught KeyError: {e}")
 
 
 def test_error_types() -> None:
-    print("=== Garden Error Types Demo ===")
+    print("=== Garden Error Types Demo ===\n")
 
-    for test in ["value", "zero", "file", "key", "unknown"]:
-        print(f"Testing: {test}")
-        garden_operations(test)
+    print("Testing ValueError...")
+    garden_operations("value")
+
+    print("\nTesting ZeroDivisionError...")
+    garden_operations("zero")
+
+    print("\nTesting FileNotFoundError...")
+    garden_operations("file")
+
+    print("\nTesting KeyError...")
+    garden_operations("key")
+
+    print("\nTesting multiple errors together...")
+    try:
+        int("abc")
+    except (ValueError, ZeroDivisionError, FileNotFoundError, KeyError):
+        print("Caught an error, but program continues!\n")
 
     print("All error types tested successfully!")
 

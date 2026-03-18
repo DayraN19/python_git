@@ -17,11 +17,9 @@ def main() -> None:
     high_scorers = [p["name"] for p in players if p["score"] > 2000]
     print("High scorers (>2000):", high_scorers)
 
-    # Transforme les scores
     doubled_scores = [p["score"]*2 for p in players]
     print("Scores doubled:", doubled_scores)
 
-    # Joueurs actifs
     active_players = [p["name"] for p in players if p["achievements"] > 0]
     print("Active players:", active_players)
 
@@ -29,7 +27,6 @@ def main() -> None:
     player_scores = {p["name"]: p["score"] for p in players}
     print("Player scores:", player_scores)
 
-    # Compter catégories
     score_categories = {
         "high": sum(1 for p in players if p["score"] > 2000),
         "medium": sum(1 for p in players if 1500 <= p["score"] <= 2000),
@@ -51,11 +48,9 @@ def main() -> None:
     total_players = len(players)
     print("Total players:", total_players)
 
-    # Average score
     average_score = sum(p["score"] for p in players) / len(players)
     print("Average score:", average_score)
 
-    # Top performer
     top_score = max(p["score"] for p in players)
     for p in players:
         if p["score"] == top_score:

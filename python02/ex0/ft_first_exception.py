@@ -1,6 +1,5 @@
 def check_temperature(temp_str: str) -> int | None:
     try:
-        print(f"Testing temperature: {temp_str}")
         temp: int = int(temp_str)
     except ValueError:
         print(f"Error: '{temp_str}' is not a valid number\n")
@@ -20,6 +19,7 @@ def check_temperature(temp_str: str) -> int | None:
 def test_temperature_input() -> None:
     test_values = ["25", "abc", "100", "-50"]
     for value in test_values:
+        print(f"Testing temperature: {value}")
         check_temperature(value)
 
 

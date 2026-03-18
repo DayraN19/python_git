@@ -23,25 +23,29 @@ class GardenManager:
     def water_plants(self) -> None:
         print("Opening watering system")
         try:
-            if not self.plants:
-                raise WaterError("Not enough water in tank")
             for plant in self.plants:
                 print(f"Watering {plant} - success")
         finally:
             print("Closing watering system (cleanup)")
 
-    def check_plant_health(
-        self, plant_name: str, water_level: int, sun_h: int
-    ) -> None:
-        if water_level < 1 or water_level > 10:
-            raise PlantError(f"Water level {water_level} is too high (max 10)")
-        if sun_h < 2 or sun_h > 12:
-            raise PlantError("Sunlight hours out of range")
+    def check_plant_health(self, plant_name: str,
+                           water_level: int, sun_h: int) -> None:
+
+        if water_level > 10:
+            raise WaterError(f"Water level {water_level} is too high (max 10)")
+        if water_level < 1:
+            raise WaterError(f"Water level {water_level} is too low (min 1)")
+
+        if sun_h > 12:
+            raise PlantError(f"Sunlight hours {sun_h} is too high (max 12)")
+        if sun_h < 2:
+            raise PlantError(f"Sunlight hours {sun_h} is too low (min 2)")
+
         print(f"{plant_name}: healthy (water: {water_level}, sun: {sun_h})")
 
 
 def test_garden_management() -> None:
-    print("=== Garden Management System ===")
+    print("=== Garden Management System ===\n")
     manager = GardenManager()
 
     print("Adding plants to garden...")
@@ -52,27 +56,27 @@ def test_garden_management() -> None:
     except PlantError as e:
         print("Error adding plant:", e)
 
-    print("Watering plants...")
+    print("\nWatering plants...")
     try:
         manager.water_plants()
     except WaterError as e:
         print("Watering error:", e)
 
-    print("Checking plant health...")
+    print("\nChecking plant health...")
     try:
         manager.check_plant_health("tomato", 5, 8)
         manager.check_plant_health("lettuce", 15, 6)
-    except PlantError as e:
+    except GardenError as e:
         print("Error checking lettuce:", e)
 
-    print("Testing error recovery...")
+    print("\nTesting error recovery...")
     try:
         raise GardenError("Not enough water in tank")
     except GardenError as e:
         print("Caught GardenError:", e)
         print("System recovered and continuing...")
 
-    print("Garden management system test complete!")
+    print("\nGarden management system test complete!")
 
 
 def main() -> None:

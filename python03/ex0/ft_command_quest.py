@@ -13,7 +13,6 @@ def ft_command_quest(argv: list[str]) -> None:
     print(f"Program name: {argv[0]}")
     print(f"Arguments received: {len(argv) - 1}")
 
-    # Afficher chaque argument à partir du 1er (index 1)
     index = 1
     for arg in argv[1:]:
         print(f"Argument {index}: {arg}")
